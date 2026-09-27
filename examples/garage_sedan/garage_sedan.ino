@@ -59,16 +59,16 @@
 /* ══ DEVICE IDENTITY — A DROP-IN REPLACEMENT FOR THE ORIGINAL SENSOR ══════════
  * zigbee2mqtt keys every device on its IEEE (long) address, and Home Assistant
  * builds entity_ids from it:
- *      sensor.0x58e6c5fffe1aabb4_battery
- *      binary_sensor.0x58e6c5fffe1aabb4_sedan_present_1
+ *      sensor.0x0011223344556677_battery
+ *      binary_sensor.0x0011223344556677_sedan_present_1
  *
  * So a board that presents the SAME IEEE is not "a new device" to z2m or HA at
  * all: it inherits the device entry, the friendly name, the entity_ids, the
  * history, and every Ami reference. NOTHING in HA needs changing.
  *
  * The address is the original garage_sedan's, and it is not arbitrary:
- *      Zigbee IEEE  0x58e6c5fffe1aabb4
- *      base MAC     58:e6:c5:1a:ab:b4      (ff:fe inserted mid-way, ESP32 rule)
+ *      Zigbee IEEE  0x0011223344556677
+ *      base MAC     00:11:22:33:44:55      (ff:fe inserted mid-way, ESP32 rule)
 *  Setting the BASE MAC before any radio starts makes the stack derive exactly
  * that IEEE. Verified present in the installed SDK: esp_mac.h:61.
  *
@@ -76,7 +76,10 @@
  * dismantled; the board being reused elsewhere keeps its own MAC untouched.
  * ═══════════════════════════════════════════════════════════════════════════ */
 static const uint8_t AMI_BASE_MAC[6] = {0x58, 0xe6, 0xc5, 0x1a, 0xab, 0xb4};
-#define AMI_IEEE_STRING "0x58e6c5fffe1aabb4"
+/* PLACEHOLDER -- replace with the IEEE of the device you are replacing.
+ * The whole point of this constant is that it is YOUR deployment's address, so it
+ * deliberately does not ship with one. Example format: 0x + 16 hex digits. */
+#define AMI_IEEE_STRING "0x0011223344556677"
 
 /* Set to 1 only AFTER z2m's device definition lists a `battery` expose, i.e.
  * after a CLEAN first interview that saw the Power Config cluster from birth. */
